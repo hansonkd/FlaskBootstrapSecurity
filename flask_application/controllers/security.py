@@ -14,7 +14,7 @@ from flask_application.helpers import encode_id, decode_id, get_or_abort
 from flask_application.models import *
 from flask_application import mail
 
-security = Blueprint('security', __name__, url_prefix='/login')
+security = Blueprint('security', __name__, url_prefix='/auth')
 
 from flaskext.wtf import Form, TextField, PasswordField, SubmitField, Required, Email, EqualTo, BooleanField, ValidationError
 

@@ -88,12 +88,27 @@ _Run these commands by using `python manage.py <command>`_
 * Commands included with Flask-Security can be found here: http://packages.python.org/Flask-Security/#flask-script-commands and by looking in `flask_application/script.py`
 
 ##Templates
-The base template is based off of Django-bootstrap and is found under: `flask_application/templates/bootstrap/layouts/base_navbar_responsive`
+The base template is based off of Django-bootstrap and is found under: `flask_application/templates/bootstrap/layouts/base_navbar_responsive.html`
 
 ##Static Content
 This project is designed to use CSSMin and Flask-Assets to manage Assets to save on bandwidth and requests. 
 
 You can find this in the `css_bootstrap` block of the layout template. You can also simply edit `static/css/site.css` as that is included in the base setup. 
+
+##Encoding and Decoding Id's
+Sometimes you won't want simple URLs revealing the order of the object ids. For example:
+    
+    http://example.com/users/view/1/
+
+So you can use `encode_id` and `decode_id` found in `flask_application/helpers.py`
+
+So 
+
+        http://example.com/users/view/1/
+        
+becomes
+
+        http://example.com/users/view/w3c8/
 
 
 
