@@ -1,0 +1,11 @@
+unittest2
+Flask >= 0.7
+Flask-Assets
+cssmin
+Flask-WTF
+Flask-Script
+Flask-Mail
+Flask-Cache
+python-memcached
+Flask-Security
+Flask-SQLAlchemy
