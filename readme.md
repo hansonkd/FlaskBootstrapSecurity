@@ -83,7 +83,7 @@ _Run these commands by using `python manage.py <command>`_
 
 * `reset_db` - Drops all SQLAlchemy Tables in your database and rebuilds them. 
 * `clear_old_keys` - This is meant to be run as a Cron job everyday. It clears out old Activation key emails.
-* `populate_db` - Script to fill the database with new data (either for testing or for initial)
+* `populate_db` - Script to fill the database with new data (either for testing or for initial). You can edit the `populate_data` command in `flask_application/populate.py` (Right now it is set up to add Users.)
 * `runserver` - Runs a debug server
 * Commands included with Flask-Security can be found here: http://packages.python.org/Flask-Security/#flask-script-commands and by looking in `flask_application/script.py`
 
