@@ -18,7 +18,12 @@ class Config(object):
     MAIL_USERNAME = 'username@gmail.com'
     MAIL_PASSWORD = '*********'
     DEFAULT_MAIL_SENDER = 'Admin < username@gmail.com >'
-
+    
+    #SECURITY_CONFIRMABLE = True
+    SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
+    SECURITY_REGISTERABLE = True
+    SECURITY_RECOVERABLE = True
+    SECURITY_URL_PREFIX = "/auth"
 
 class ProductionConfig(Config):
     DEBUG = False

@@ -57,7 +57,7 @@ else:
     app.logger.info("Emailing on error is DISABLED")
 
 # Assets
-from flaskext.assets import Environment
+from flask.ext.assets import Environment
 assets = Environment(app)
 # Ensure output directory exists
 assets_output_dir = os.path.join(FLASK_APP_DIR, 'static', 'gen')
@@ -65,7 +65,7 @@ if not os.path.exists(assets_output_dir):
     os.mkdir(assets_output_dir)
 
 # Email
-from flaskext.mail import Mail
+from flask.ext.mail import Mail
 mail = Mail(app)
 
 # Memcache
@@ -92,19 +92,16 @@ app.jinja_env.filters['datetimeformat'] = datetimeformat
 from flask_application.controllers.frontend import frontend
 app.register_blueprint(frontend)
 
+from flask.ext.security import Security, SQLAlchemyUserDatastore
+from flask_application.models import db, User, Role
+from flask_application.security_extras import ExtendedRegisterForm
+
+# Setup Flask-Security
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+security = Security(app, user_datastore,
+         register_form=ExtendedRegisterForm)
 
 
-from models import db
 
-class UserAccountMixin():
-        first_name = db.Column(db.String(120))
-        last_name = db.Column(db.String(120))
-
-from flask.ext.security.datastore.sqlalchemy import SQLAlchemyUserDatastore
-from flask.ext.security import Security
-
-Security(app, SQLAlchemyUserDatastore(db, UserAccountMixin))
-
-
-from flask_application.controllers.security import security
-app.register_blueprint(security)
+from flask_application.controllers.admin import admin
+app.register_blueprint(admin)

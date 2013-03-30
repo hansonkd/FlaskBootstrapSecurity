@@ -1,5 +1,5 @@
 unittest2
-Flask >= 0.7
+Flask >= 0.9
 Flask-Assets
 cssmin
 Flask-WTF
