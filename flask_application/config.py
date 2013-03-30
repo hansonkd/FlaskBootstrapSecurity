@@ -28,6 +28,8 @@ class Config(object):
 class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
+    SECURITY_CONFIRMABLE = True
+    SECURITY_LOGIN_WITHOUT_CONFIRMATION = False
 
 class TestConfig(Config):
     SITE_ROOT_URL = 'http://localhost:5000'
