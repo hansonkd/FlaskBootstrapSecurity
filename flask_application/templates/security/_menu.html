@@ -4,7 +4,7 @@
   {%- endif %}
 
   {% if current_user.has_role('admin') -%}
-  <li><a href="{{ url_for('admin.admin') }}">Admin</a></li>
+  <li><a href="{{ url_for('admin.admin_page') }}">Admin</a></li>
   {% endif -%}
   
   {% if current_user.has_role('admin') or current_user.has_role('editor') -%}
