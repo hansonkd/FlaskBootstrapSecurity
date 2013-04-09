@@ -5,7 +5,7 @@ sys.path.insert(0, os.getcwd())
 from flask_application import app
 from flask.ext.script import Manager, Server
 
-from flask_application.script import ClearActivationKeys, ResetDB, PopulateDB
+from flask_application.script import ResetDB, PopulateDB
 
 from flask.ext.security.script import (CreateUserCommand , AddRoleCommand,
         RemoveRoleCommand, ActivateUserCommand, DeactivateUserCommand)
@@ -13,7 +13,6 @@ from flask.ext.security.script import (CreateUserCommand , AddRoleCommand,
 manager = Manager(app)
 manager.add_command("runserver", Server())
 
-manager.add_command("clear_old_keys", ClearActivationKeys())
 manager.add_command("reset_db", ResetDB())
 manager.add_command("populate_db", PopulateDB())
 
