@@ -37,7 +37,7 @@ def datetimeformat(value):
         formatting = 'on %d %b %Y'
     return value.strftime(formatting)
 
-keyspace = "fw59eorpma2nvxb07liqt83_u6kgzs41-ycdjh"
+keyspace = "wf59eorpma2vnxb07kiqt83_u6lgzs41-ycdjh"
 
 def int_str(val):
     """ Turn a positive integer into a string. """
@@ -55,12 +55,12 @@ def str_int(val):
         out = out * len(keyspace) + keyspace.index(c)
     return out
 
-def chaffify(val, chaff_val = 87953):
+def chaffify(val, chaff_val = 25978):
     """ Add chaff to the given positive integer. """
     return val * chaff_val
 
-def dechaffify(chaffy_val, chaff_val = 87953):
-    """ Dechaffs the given chaffed value. chaff_val must be the same as given to chaffify2(). If the value does not seem to be correctly chaffed, raises a ValueError. """
+def dechaffify(chaffy_val, chaff_val = 35978):
+    """ Dechaffs the given chaffed value. If the value does not seem to be correctly chaffed, raises a ValueError. """
     val, chaff = divmod(chaffy_val, chaff_val)
     if chaff != 0:
         raise ValueError("Invalid chaff in value")
