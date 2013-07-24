@@ -32,39 +32,39 @@ Installation
 
 6. Edit `flask_application/config.py` to change your mail server and other settings:
 
-    class Config(object):
-        SECRET_KEY = '{SECRET_KEY}'
-        SITE_NAME = 'Flask Site'
-        SITE_ROOT_URL = 'http://example.com'
-        MEMCACHED_SERVERS = ['localhost:11211']
-        SYS_ADMINS = ['foo@example.com']
+        class Config(object):
+            SECRET_KEY = '{SECRET_KEY}'
+            SITE_NAME = 'Flask Site'
+            SITE_ROOT_URL = 'http://example.com'
+            MEMCACHED_SERVERS = ['localhost:11211']
+            SYS_ADMINS = ['foo@example.com']
     
-        # Mongodb support
-        MONGODB_DB = 'testing'
-        MONGODB_HOST = 'localhost'
-        MONGODB_PORT = 27017
+            # Mongodb support
+            MONGODB_DB = 'testing'
+            MONGODB_HOST = 'localhost'
+            MONGODB_PORT = 27017
 
 
-        # Configured for GMAIL
-        MAIL_SERVER = 'smtp.gmail.com'
-        MAIL_PORT = 465
-        MAIL_USE_SSL = True
-        MAIL_USERNAME = 'username@gmail.com'
-        MAIL_PASSWORD = '*********'
-        DEFAULT_MAIL_SENDER = 'Admin < username@gmail.com >'
+            # Configured for GMAIL
+            MAIL_SERVER = 'smtp.gmail.com'
+            MAIL_PORT = 465
+            MAIL_USE_SSL = True
+            MAIL_USERNAME = 'username@gmail.com'
+            MAIL_PASSWORD = '*********'
+            DEFAULT_MAIL_SENDER = 'Admin < username@gmail.com >'
     
-        # Flask-Security setup
-        SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
-        SECURITY_REGISTERABLE = True
-        SECURITY_RECOVERABLE = True
-        SECURITY_URL_PREFIX = '/auth'
-        SECUIRTY_POST_LOGIN = '/'
+            # Flask-Security setup
+            SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
+            SECURITY_REGISTERABLE = True
+            SECURITY_RECOVERABLE = True
+            SECURITY_URL_PREFIX = '/auth'
+            SECUIRTY_POST_LOGIN = '/'
     
-        # Flask-Social setup
-        SOCIAL_TWITTER = {
-            'consumer_key': '',
-            'consumer_secret': ''
-        }
+            # Flask-Social setup
+            SOCIAL_TWITTER = {
+                'consumer_key': '',
+                'consumer_secret': ''
+            }
 
 
 7. Run a development server:
