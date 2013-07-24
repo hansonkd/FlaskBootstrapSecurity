@@ -65,13 +65,6 @@ def dechaffify(chaffy_val, chaff_val = 25978):
         raise ValueError("Invalid chaff in value")
     return val
 
-def get_or_abort(model, object_id, code=404):
-        """
-        get an object with his given id or an abort error (404 is the default)
-        """
-        result = model.query.get(object_id)
-        return result or abort(code)
-
 def encode_id(val):
     """
      Encodes ID into semi random set of strings

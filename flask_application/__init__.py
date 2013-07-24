@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-
 import os
+
 
 FLASK_APP_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -92,16 +91,19 @@ app.jinja_env.filters['datetimeformat'] = datetimeformat
 from flask_application.controllers.frontend import frontend
 app.register_blueprint(frontend)
 
-from flask.ext.security import Security, SQLAlchemyUserDatastore
-from flask_application.models import db, User, Role
+from flask.ext.security import Security, MongoEngineUserDatastore
+from flask_application.models import db, User, Role, Connection
 from flask_application.security_extras import ExtendedRegisterForm
 
 # Setup Flask-Security
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security(app, user_datastore,
+user_datastore = MongoEngineUserDatastore(db, User, Role)
+app.security = Security(app, user_datastore,
          register_form=ExtendedRegisterForm)
 
-
+# Setup Flask-Social
+from flask.ext.social import Social
+from flask.ext.social.datastore import MongoEngineConnectionDatastore
+app.social = Social(app, MongoEngineConnectionDatastore(db, Connection))
 
 from flask_application.controllers.admin import admin
 app.register_blueprint(admin)

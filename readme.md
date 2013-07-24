@@ -2,7 +2,7 @@ Flask Boilerplate Project
 =========================
 http://flask.pocoo.org/
 
-This project is meant to be helpful for those who want to quickly jump into a new flask project. UserAccounts, Caching, Mail, User Registration, Roles, Python Script Commands, and Twitter Bootstrap are already configured. 
+This project is meant to be helpful for those who want to quickly jump into a new flask project. Social Media Accounts, UserAccounts, Caching, Mail, User Registration, Roles, Python Script Commands, and Twitter Bootstrap are already configured. 
 
 The Flask Boilerplate Project consists of many projects merged into one to provide the most comprehensive boilerplate for your flask project. It is set up to quickly connect to Google Apps to start sending emails and is fully configurable.
 
@@ -25,8 +25,12 @@ Installation
 4. Install the required python dependancies:
 
         pip install -r requirements.txt
+    
+5. As a temporary workaround, run this command to get a version of Flask-Social that works with the current mongoengine
 
-5. Edit `flask_application/config.py` to change your mail server and other settings:
+        pip install --upgrade https://github.com/mattupstate/flask-social/tball/develop
+
+6. Edit `flask_application/config.py` to change your mail server and other settings:
 
         class Config(object):
             SECRET_KEY = '{SECRET_KEY}'
@@ -42,11 +46,11 @@ Installation
             MAIL_PASSWORD = '*********'
             DEFAULT_MAIL_SENDER = 'Admin < username@gmail.com >'
 
-6. Prepare the SQLAlchemy Database:
+7. Prepare the SQLAlchemy Database:
 
         python manage.py reset_db
 
-7. Run a development server:
+8. Run a development server:
         
         python manage.py runserver
 
@@ -64,7 +68,8 @@ Credit
 * Flask-Cache
 * python-memcached
 * Flask-Security
-* Flask-SQLAlchemy
+* Flask-Social
+* Flask-MongoEngine
 
 ####Non-Python Projects:
 * Twitter Bootstrap
@@ -81,8 +86,7 @@ Usage
 _Run these commands by using `python manage.py <command>`_
 
 
-* `reset_db` - Drops all SQLAlchemy Tables in your database and rebuilds them. 
-* `clear_old_keys` - This is meant to be run as a Cron job everyday. It clears out old Activation key emails.
+* `reset_db` - Drops all Mongo documents
 * `populate_db` - Script to fill the database with new data (either for testing or for initial). You can edit the `populate_data` command in `flask_application/populate.py` (Right now it is set up to add Users.)
 * `runserver` - Runs a debug server
 * Commands included with Flask-Security can be found here: http://packages.python.org/Flask-Security/#flask-script-commands and by looking in `flask_application/script.py`

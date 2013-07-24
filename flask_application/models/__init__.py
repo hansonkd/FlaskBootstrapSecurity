@@ -1,26 +1,38 @@
 from flask_application import app
 
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.mongoengine import MongoEngine
 from flask.ext.security import UserMixin, RoleMixin
 
-db = SQLAlchemy(app)
+db = MongoEngine(app)
 
 # Define models
-roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+class Role(db.Document, RoleMixin):
+    name = db.StringField(max_length=80, unique=True)
+    description = db.StringField(max_length=255)
 
-class Role(db.Model, RoleMixin):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(80), unique=True)
-    description = db.Column(db.String(255))
+class User(db.Document, UserMixin):
+    email = db.StringField(max_length=255)
+    username = db.StringField(max_length=255)
+    password = db.StringField(max_length=255)
+    active = db.BooleanField(default=True)
+    confirmed_at = db.DateTimeField()
+    roles = db.ListField(db.ReferenceField(Role), default=[])
+    
+    @property
+    def connections(self):
+        return Connection.objects(user_id=str(self.id))
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255), unique=True)
-    email = db.Column(db.String(255), unique=True)
-    password = db.Column(db.String(255))
-    active = db.Column(db.Boolean())
-    confirmed_at = db.Column(db.DateTime())
-    roles = db.relationship('Role', secondary=roles_users,
-                            backref=db.backref('users', lazy='dynamic'))
+class Connection(db.Document):
+    user_id = db.ObjectIdField()
+    provider_id = db.StringField(max_length=255)
+    provider_user_id = db.StringField(max_length=255)
+    access_token = db.StringField(max_length=255)
+    secret = db.StringField(max_length=255)
+    display_name = db.StringField(max_length=255)
+    profile_url = db.StringField(max_length=512)
+    image_url = db.StringField(max_length=512)
+    rank = db.IntField(default=1)
+
+    @property
+    def user(self):
+        return User.objects(id=self.user_id).first()

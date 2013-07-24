@@ -1,0 +1,24 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+{% extends "security/index.html" %}
+
+{% macro show_provider_button(provider_id, display_name, conn) %}
+    {% if conn %}
+    <form action="{{ url_for('social.remove_connection', provider_id=conn.provider_id, provider_user_id=conn.provider_user_id) }}" method="DELETE">
+      <input type="submit" class="btn" value="Disconnect {{ display_name }}" />
+    </form>
+    {% else %}
+    <form action="{{ url_for('social.connect', provider_id=provider_id) }}" method="POST">
+      <input type="submit" class="btn" value="Connect {{ display_name }}" />
+    </form>
+    {% endif %}
+{% endmacro %}
+
+{% block title %}
+Profile Management
+{% endblock %}
+
+{% block content %}
+<h1>Manage your social accounts</h1>
+{{ show_provider_button('twitter', 'Twitter', twitter_conn) }}
+{% endblock %}
