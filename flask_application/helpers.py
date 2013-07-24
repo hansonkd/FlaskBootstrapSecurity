@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-
 import datetime
 import math
 from flask import abort 
 from functools import wraps
+
 
 # Caching
 def cached(app, timeout=5 * 60, key='view/%s'):
@@ -59,7 +58,7 @@ def chaffify(val, chaff_val = 25978):
     """ Add chaff to the given positive integer. """
     return val * chaff_val
 
-def dechaffify(chaffy_val, chaff_val = 35978):
+def dechaffify(chaffy_val, chaff_val = 25978):
     """ Dechaffs the given chaffed value. If the value does not seem to be correctly chaffed, raises a ValueError. """
     val, chaff = divmod(chaffy_val, chaff_val)
     if chaff != 0:

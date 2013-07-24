@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-
-# http://flask.pocoo.org/docs/config/#development-production
-
 class Config(object):
     SECRET_KEY = '{SECRET_KEY}'
     SITE_NAME = 'Flask Site'
