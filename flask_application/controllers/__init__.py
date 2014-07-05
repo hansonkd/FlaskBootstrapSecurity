@@ -12,13 +12,16 @@ class ViewMeta(MethodViewType):
         super(ViewMeta, cls).__init__(name, bases, dct)
 
         route = dct.get('route')
+        blueprint = dct.get('blueprint')
+        bp = blueprint if blueprint and blueprint != NotImplemented else app
         if route and route != NotImplemented:
-            endpoint = dct.get('route_name', name.rstrip('View').lower())
-            app.add_url_rule(route, view_func=cls().as_view(endpoint))
+            endpoint = dct.get('route_name', name.lower().split('view')[0])
+            bp.add_url_rule(route, view_func=cls().as_view(endpoint))
 
 
 class BaseView(with_metaclass(ViewMeta, MethodView)):
     route = NotImplemented
+    blueprint = NotImplemented
 
 
 class TemplateView(BaseView):

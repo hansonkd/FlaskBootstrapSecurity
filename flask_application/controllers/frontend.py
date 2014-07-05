@@ -12,6 +12,7 @@ frontend = Blueprint('frontend', __name__)
 
 
 class IndexView(TemplateView):
+    blueprint = frontend
     route = '/'
     template_name = 'home/index.html'
 
@@ -23,8 +24,9 @@ class IndexView(TemplateView):
 
 
 class ProfileView(TemplateView):
+    blueprint = frontend
     route = '/profile'
-    template_name = 'home/profile.html'
+    template_name = 'profiles/profile.html'
     decorators = [login_required]
 
     def get_context_data(self, *args, **kwargs):

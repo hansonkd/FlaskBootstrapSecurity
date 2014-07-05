@@ -41,6 +41,9 @@ class Config(object):
         # import uuid; salt = uuid.uuid4().hex
         self.SECURITY_PASSWORD_SALT = '2b8b74efc58e489e879810905b6b6d4dc6'
 
+        self.SECURITY_CONFIRMABLE = True
+        self.SECURITY_LOGIN_WITHOUT_CONFIRMATION = False
+
         # CACHE
         self.CACHE_TYPE = 'simple'
 
@@ -64,16 +67,13 @@ class ProductionConfig(Config):
         self.HEROKU = True
         self.PRODUCTION = True
         self.LOG_LEVEL = logging.INFO
-        self.SERVER_NAME = 'http://example.com'
+        self.SERVER_NAME = 'example.com'
 
         self.MAIL_SERVER = 'smtp.mandrillapp.com'
         self.MAIL_PORT = 465
         self.MAIL_USE_SSL = True
         self.MAIL_USERNAME = os.getenv('MANDRILL_USERNAME')
         self.MAIL_PASSWORD = os.getenv('MANDRILL_APIKEY')
-
-        self.SECURITY_CONFIRMABLE = True
-        self.SECURITY_LOGIN_WITHOUT_CONFIRMATION = False
 
         self.MONGODB_SETTINGS = self.mongo_from_uri(os.getenv('MONGOHQ_URL'))
 

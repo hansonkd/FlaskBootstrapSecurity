@@ -1,6 +1,6 @@
 <ul class="nav navbar-nav navbar-right">
   {%- if current_user.is_authenticated() -%}
-  <li><a href="{{ url_for('frontend.profile') }}">Hello {{ current_user.username }} (Profile)</a></li>
+  <li><a href="{{ url_for('frontend.profile') }}">Hello {{ current_user.email }} (Profile)</a></li>
   {%- endif %}
 
   {% if current_user.has_role('admin') -%}
@@ -12,13 +12,13 @@
   {% endif -%}
   
     {%- if current_user.is_authenticated() -%}
-      <li><a href="{{ url_for_security('logout') }}">Logout</a></li>
+      <li><a href="{{ url_for('security.logout') }}">Logout</a></li>
     {%- else -%}
       {% if security.registerable %}
-          <li><a href="{{ url_for_security('register') }}">Register</a></li>
+          <li><a href="{{ url_for('security.register') }}">Register</a></li>
       {% endif %}
       <li>
-          <a href="{{ url_for_security('login') }}">Login</a>
+          <a href="{{ url_for('security.login') }}">Login</a>
       </li>
     {%- endif -%}
 </ul>

@@ -15,7 +15,9 @@ Register
 
         {{ wtf.form_field(register_user_form.email) }}
         {{ wtf.form_field(register_user_form.password) }}
-        {{ wtf.form_field(register_user_form.password_confirm) }}
+        {% if register_user_form.password_confirm %}
+            {{ wtf.form_field(register_user_form.password_confirm) }}
+        {% endif %}
         {{ wtf.form_field(register_user_form.submit) }}
 
     </form>
