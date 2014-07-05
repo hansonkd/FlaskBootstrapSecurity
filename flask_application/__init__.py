@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from flask import Flask
 
@@ -12,16 +14,15 @@ app = Flask(
 )
 
 #  Config
-if True:  # os.getenv('DEV') == 'yes':
-    app.config.from_object('flask_application.config.DevelopmentConfig')
-    app.logger.info("Config: Development")
-elif os.getenv('TEST') == 'yes':
+if os.getenv('TEST') == 'yes':
     app.config.from_object('flask_application.config.TestConfig')
     app.logger.info("Config: Test")
-else:
+elif os.getenv('PRODUCTION') == 'yes':
     app.config.from_object('flask_application.config.ProductionConfig')
     app.logger.info("Config: Production")
-
+else:
+    app.config.from_object('flask_application.config.DevelopmentConfig')
+    app.logger.info("Config: Development")
 #  Logging
 import logging
 logging.basicConfig(

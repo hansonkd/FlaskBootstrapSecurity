@@ -4,8 +4,8 @@ import logging
 class Config(object):
     SECRET_KEY = '{SECRET_KEY}'
     SITE_NAME = 'Flask Site'
-    SITE_ROOT_URL = 'http://example.com'
     LOG_LEVEL = logging.DEBUG
+    SERVER_NAME = 'localhost:5000'
 
     MEMCACHED_SERVERS = ['localhost:11211']
     SYS_ADMINS = ['foo@example.com']
@@ -42,6 +42,7 @@ class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
     LOG_LEVEL = logging.INFO
+    SERVER_NAME = 'http://example.com'
 
     MAIL_SERVER = 'smtp.mandrillapp.com'
     MAIL_PORT = 465

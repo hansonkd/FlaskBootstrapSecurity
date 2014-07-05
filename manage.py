@@ -1,9 +1,4 @@
 #!/usr/bin/env python
-import sys
-import os
-sys.path.pop(0)
-sys.path.insert(0, os.getcwd())
-
 from flask_application import app
 from flask.ext.script import Manager, Server
 
