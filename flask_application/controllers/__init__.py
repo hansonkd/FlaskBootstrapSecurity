@@ -18,7 +18,7 @@ class ViewMeta(MethodViewType):
 
 
 class BaseView(with_metaclass(ViewMeta, MethodView)):
-    pass
+    route = NotImplemented
 
 
 class TemplateView(BaseView):
