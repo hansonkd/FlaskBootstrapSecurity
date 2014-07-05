@@ -1,10 +1,13 @@
-Flask Boilerplate Project
+Flask Heroku Boilerplate Project
 =========================
 http://flask.pocoo.org/
 
 This project is meant to be helpful for those who want to quickly jump into a new flask project. UserAccounts, Caching, Mail, User Registration, Roles, Python Script Commands, and Twitter Bootstrap are already configured.
 
 The Flask Boilerplate Project consists of many projects merged into one to provide the most flexible boilerplate for your flask project.
+
+It is pre-configured for a production Heroku environment, but can be adjusted to suit your needs.
+
 
 Installation
 ------------
@@ -116,9 +119,9 @@ You can find this in the `style` block of the layout template. You can also simp
 Deploying
 ---------
 
-This app is all ready configured with MongoHQ (database), Memcached, and Mandrill (email).
+This app is all ready configured to be deployed on Heroku with MongoHQ (database) and Mandrill (email).
 
-Simply add the free tiers of those services, set the production config with `heroku config:set PRODUCTION=yes` and deploy normally.
+Simply add the free tiers of those services, change your `config.py` `SERVER_NAME`, set the production config with `heroku config:set PRODUCTION=yes` and deploy normally.
 
 
 LICENSE &amp; COPYRIGHT

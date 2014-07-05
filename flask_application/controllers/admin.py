@@ -1,15 +1,17 @@
-from flask import Blueprint, render_template
-from flask.ext.security import (login_required, roles_required, roles_accepted)
-from flask_application.models import *
+from flask import Blueprint
+from flask.ext.security import roles_required
+
+from flask_application.controllers import TemplateView
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
-@admin.route('/admin')
-@roles_required('admin')
-def admin_page():
-    return render_template('security/index.html', content='Admin Page')
 
-@admin.route('/admin_or_editor')
-@roles_accepted('admin', 'editor')
-def admin_or_editor():
-    return render_template('security/index.html', content='Admin or Editor Page')
+class AdminView(TemplateView):
+    route = '/admin'
+    template_name = 'security/index.html'
+    decorators = [roles_required('admin')]
+
+    def get_context_data(self, *args, **kwargs):
+        return {
+            'content': 'This is the Admin Page'
+        }
