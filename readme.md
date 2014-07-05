@@ -2,9 +2,9 @@ Flask Boilerplate Project
 =========================
 http://flask.pocoo.org/
 
-This project is meant to be helpful for those who want to quickly jump into a new flask project. Social Media Accounts, UserAccounts, Caching, Mail, User Registration, Roles, Python Script Commands, and Twitter Bootstrap are already configured. 
+This project is meant to be helpful for those who want to quickly jump into a new flask project. UserAccounts, Caching, Mail, User Registration, Roles, Python Script Commands, and Twitter Bootstrap are already configured.
 
-The Flask Boilerplate Project consists of many projects merged into one to provide the most comprehensive boilerplate for your flask project. It is set up to quickly connect to Google Apps to start sending emails and is fully configurable.
+The Flask Boilerplate Project consists of many projects merged into one to provide the most flexible boilerplate for your flask project.
 
 Installation
 ------------
@@ -26,45 +26,43 @@ Installation
 
         pip install -r requirements.txt
     
-5. As a temporary workaround, run this command to get a version of Flask-Social that works with the current mongoengine
-
-        pip install --upgrade https://github.com/mattupstate/flask-social/tball/develop
-
-6. Edit `flask_application/config.py` to change your mail server and other settings:
+5. Edit `flask_application/config.py` to change your mail server, password salt and other settings:
 
         class Config(object):
             SECRET_KEY = '{SECRET_KEY}'
             SITE_NAME = 'Flask Site'
             SITE_ROOT_URL = 'http://example.com'
+            LOG_LEVEL = logging.DEBUG
+
             MEMCACHED_SERVERS = ['localhost:11211']
             SYS_ADMINS = ['foo@example.com']
-    
+
             # Mongodb support
             MONGODB_DB = 'testing'
             MONGODB_HOST = 'localhost'
             MONGODB_PORT = 27017
 
-
-            # Configured for GMAIL
+            # Configured for Gmail
+            DEFAULT_MAIL_SENDER = 'Admin < username@example.com >'
             MAIL_SERVER = 'smtp.gmail.com'
             MAIL_PORT = 465
             MAIL_USE_SSL = True
             MAIL_USERNAME = 'username@gmail.com'
             MAIL_PASSWORD = '*********'
-            DEFAULT_MAIL_SENDER = 'Admin < username@gmail.com >'
-    
+
             # Flask-Security setup
+            SECURITY_EMAIL_SENDER = 'Security < security@example.com >'
             SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
             SECURITY_REGISTERABLE = True
             SECURITY_RECOVERABLE = True
             SECURITY_URL_PREFIX = '/auth'
             SECUIRTY_POST_LOGIN = '/'
-    
-            # Flask-Social setup
-            SOCIAL_TWITTER = {
-                'consumer_key': '',
-                'consumer_secret': ''
-            }
+            SECURITY_PASSWORD_HASH = 'pbkdf2_sha512'
+            # import uuid; salt = uuid.uuid4().hex
+            SECURITY_PASSWORD_SALT = '2b8b74efc58e489e879810905b6b6d4dc6'
+
+            # CACHE
+            CACHE_TYPE = 'simple'
 
 
 7. Run a development server:
@@ -94,7 +92,7 @@ Credit
 ####Contributing Projects:
 * https://github.com/swaroopch/flask-boilerplate _The project's structure is built from this_
 * Flask-Security Example App
-* https://github.com/earle/django-bootstrap _uses some template macros_
+* https://github.com/mbr/flask-bootstrap
 
 Usage
 -----
@@ -109,28 +107,12 @@ _Run these commands by using `python manage.py <command>`_
 * Commands included with Flask-Security can be found here: http://packages.python.org/Flask-Security/#flask-script-commands and by looking in `flask_application/script.py`
 
 ##Templates
-The base template is based off of Django-bootstrap and is found under: `flask_application/templates/bootstrap/layouts/base_navbar_responsive.html`
+The base template used Flask-
 
 ##Static Content
 This project is designed to use CSSMin and Flask-Assets to manage Assets to save on bandwidth and requests. 
 
-You can find this in the `css_bootstrap` block of the layout template. You can also simply edit `static/css/site.css` as that is included in the base setup. 
-
-##Encoding and Decoding Id's
-Sometimes you won't want simple URLs revealing the order of the object ids. For example:
-    
-    http://example.com/users/view/1/
-
-So you can use `encode_id` and `decode_id` found in `flask_application/helpers.py`
-
-So 
-
-        http://example.com/users/view/1/
-        
-becomes
-
-        http://example.com/users/view/w3c8/
-
+You can find this in the `style` block of the layout template. You can also simply edit `static/css/site.css` as that is included in the base setup.
 
 
 LICENSE &amp; COPYRIGHT
