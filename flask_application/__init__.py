@@ -14,15 +14,9 @@ app = Flask(
 )
 
 #  Config
-if os.getenv('TEST') == 'yes':
-    app.config.from_object('flask_application.config.TestConfig')
-    app.logger.info("Config: Test")
-elif os.getenv('PRODUCTION') == 'yes':
-    app.config.from_object('flask_application.config.ProductionConfig')
-    app.logger.info("Config: Production")
-else:
-    app.config.from_object('flask_application.config.DevelopmentConfig')
-    app.logger.info("Config: Development")
+app.config.from_object('flask_application.config.app_config')
+app.logger.info("Config: %s" % app.config['ENVIRONMENT'])
+
 #  Logging
 import logging
 logging.basicConfig(
@@ -84,11 +78,15 @@ app.cache = Cache(app)
 from flask_application.controllers.frontend import frontend
 app.register_blueprint(frontend)
 
+# MongoEngine
+from flask.ext.mongoengine import MongoEngine
+app.db = MongoEngine(app)
+
 from flask.ext.security import Security, MongoEngineUserDatastore
-from flask_application.models import db, User, Role
+from flask_application.models import User, Role
 
 # Setup Flask-Security
-user_datastore = MongoEngineUserDatastore(db, User, Role)
+user_datastore = MongoEngineUserDatastore(app.db, User, Role)
 app.security = Security(app, user_datastore)
 
 from flask_application.controllers.admin import admin

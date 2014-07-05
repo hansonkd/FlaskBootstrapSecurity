@@ -3,7 +3,7 @@ from flask_application import app
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.security import UserMixin, RoleMixin
 
-db = MongoEngine(app)
+db = app.db
 
 # Define models
 class Role(db.Document, RoleMixin):
