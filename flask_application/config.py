@@ -5,6 +5,11 @@ from pymongo.uri_parser import parse_uri
 
 class Config(object):
     def __init__(self):
+        self.DEBUG = False
+        self.TESTING = False
+        self.HEROKU = False
+        self.PRODUCTION = False
+
         self.SECRET_KEY = '{SECRET_KEY}'
         self.SITE_NAME = 'Flask Site'
         self.LOG_LEVEL = logging.DEBUG
@@ -56,22 +61,19 @@ class ProductionConfig(Config):
     def __init__(self):
         super(ProductionConfig, self).__init__()
         self.ENVIRONMENT = 'Production'
-        self.DEBUG = False
-        self.TESTING = False
+        self.HEROKU = True
+        self.PRODUCTION = True
         self.LOG_LEVEL = logging.INFO
         self.SERVER_NAME = 'http://example.com'
 
         self.MAIL_SERVER = 'smtp.mandrillapp.com'
         self.MAIL_PORT = 465
         self.MAIL_USE_SSL = True
-        self.MAIL_USERNAME = 'mandrilluser'
-        self.MAIL_PASSWORD = '*********'
+        self.MAIL_USERNAME = os.getenv('MANDRILL_USERNAME')
+        self.MAIL_PASSWORD = os.getenv('MANDRILL_APIKEY')
 
         self.SECURITY_CONFIRMABLE = True
         self.SECURITY_LOGIN_WITHOUT_CONFIRMATION = False
-
-        self.CACHE_TYPE = 'memcached'
-        self.CACHE_MEMCACHED_SERVERS = ['localhost:11211']
 
         self.MONGODB_SETTINGS = self.mongo_from_uri(os.getenv('MONGOHQ_URL'))
 

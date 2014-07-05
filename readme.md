@@ -113,6 +113,13 @@ This project is designed to use CSSMin and Flask-Assets to manage Assets to save
 
 You can find this in the `style` block of the layout template. You can also simply edit `static/css/site.css` as that is included in the base setup.
 
+Deploying
+---------
+
+This app is all ready configured with MongoHQ (database), Memcached, and Mandrill (email).
+
+Simply add the free tiers of those services, set the production config with `heroku config:set PRODUCTION=yes` and deploy normally.
+
 
 LICENSE &amp; COPYRIGHT
 -----------------------
