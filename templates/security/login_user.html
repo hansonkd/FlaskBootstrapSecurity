@@ -1,0 +1,30 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends "security/index.html" %}
+
+{% macro social_login(provider_id, display_name) %}
+  <form action="{{ url_for('social.login', provider_id=provider_id) }}" method="POST">
+    <input type="submit" class="btn" value="Login with {{ display_name }}" />
+  </form>
+{% endmacro %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block form_content %}
+<h1>Login</h1>
+<a href="{{ url_for('security.forgot_password') }}">Forgot password</a>
+<form action="{{ url_for('security.login') }}" method="POST" name="register_user_form">
+    {{ login_user_form.hidden_tag() }}
+
+    {{ wtf.form_errors(login_user_form) }}
+
+    {{ wtf.form_field(login_user_form.email) }}
+    {{ wtf.form_field(login_user_form.password) }}
+    {{ wtf.form_field(login_user_form.remember) }}
+    {{ wtf.form_field(login_user_form.next) }}
+    {{ wtf.form_field(login_user_form.submit) }}
+
+</form>
+{% endblock %}

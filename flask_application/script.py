@@ -1,6 +1,6 @@
 from flask.ext.script import Command
 from flask_application.populate import populate_data
-from flask_application.models import db, User, Role, Connection
+from flask_application.models import User, Role, Connection
 
 
 class ResetDB(Command):
@@ -8,6 +8,7 @@ class ResetDB(Command):
     def run(self, **kwargs):
         for m in [User, Role, Connection]:
             m.drop_collection()
+
 
 class PopulateDB(Command):
     """Fills in predefined data into DB"""

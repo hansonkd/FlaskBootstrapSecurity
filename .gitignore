@@ -1,6 +1,6 @@
 *.pyc
 .virtualenv
 .DS_Store
-flask_application/static/.webassets-cache
-flask_application/static/gen/
-flask_application/test.db
+.idea
+static/.webassets-cache
+static/gen/

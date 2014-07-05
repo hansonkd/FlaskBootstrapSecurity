@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-
-import sys, os
+import sys
+import os
 sys.path.pop(0)
 sys.path.insert(0, os.getcwd())
 
@@ -9,8 +9,8 @@ from flask.ext.script import Manager, Server
 
 from flask_application.script import ResetDB, PopulateDB
 
-from flask.ext.security.script import (CreateUserCommand , AddRoleCommand,
-        RemoveRoleCommand, ActivateUserCommand, DeactivateUserCommand)
+from flask.ext.security.script import CreateUserCommand, AddRoleCommand,\
+    RemoveRoleCommand, ActivateUserCommand, DeactivateUserCommand
 
 manager = Manager(app)
 manager.add_command("runserver", Server())

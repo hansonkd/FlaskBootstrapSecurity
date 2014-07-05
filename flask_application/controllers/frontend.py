@@ -11,7 +11,7 @@ frontend = Blueprint('frontend', __name__)
 @frontend.route('/')
 def index():
     return render_template(
-                'index.html',
+        'home/index.html',
                 config=app.config,
                 now=datetime.datetime.now,
             )
@@ -21,5 +21,4 @@ def index():
 def profile():
     return render_template(
         'profiles/profile.html',
-        content='Profile Page',
-        twitter_conn=app.social.twitter.get_connection())
+        content='Profile Page')
