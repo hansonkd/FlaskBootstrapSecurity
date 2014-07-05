@@ -83,7 +83,6 @@ Credit
 * Flask-Cache
 * python-memcached
 * Flask-Security
-* Flask-Social
 * Flask-MongoEngine
 
 ####Non-Python Projects:
@@ -107,7 +106,7 @@ _Run these commands by using `python manage.py <command>`_
 * Commands included with Flask-Security can be found here: http://packages.python.org/Flask-Security/#flask-script-commands and by looking in `flask_application/script.py`
 
 ##Templates
-The base template used Flask-
+The base template used Flask-Bootstrap for basic templates. This project can be overridden by adding your own templates to the `templates` folder or by taking it out.
 
 ##Static Content
 This project is designed to use CSSMin and Flask-Assets to manage Assets to save on bandwidth and requests. 
