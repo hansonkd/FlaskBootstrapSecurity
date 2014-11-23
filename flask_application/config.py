@@ -19,7 +19,7 @@ class Config(object):
 
         # Mongodb support
         self.MONGODB_SETTINGS = self.mongo_from_uri(
-            'mongodb://localhost:27017/testing'
+            'mongodb://localhost:27017/development'
         )
 
         # Configured for Gmail
@@ -27,8 +27,8 @@ class Config(object):
         self.MAIL_SERVER = 'smtp.gmail.com'
         self.MAIL_PORT = 465
         self.MAIL_USE_SSL = True
-        self.MAIL_USERNAME = 'username@gmail.com'
-        self.MAIL_PASSWORD = '*********'
+        self.MAIL_USERNAME = 'user@example.com'
+        self.MAIL_PASSWORD = '****************'
 
         # Flask-Security setup
         self.SECURITY_EMAIL_SENDER = 'Security < security@example.com >'
@@ -78,14 +78,6 @@ class ProductionConfig(Config):
         self.MONGODB_SETTINGS = self.mongo_from_uri(os.getenv('MONGOHQ_URL'))
 
 
-class TestConfig(Config):
-    def __init__(self):
-        super(TestConfig, self).__init__()
-        self.ENVIRONMENT = 'Test'
-        self.DEBUG = False
-        self.TESTING = True
-
-
 class DevelopmentConfig(Config):
     '''
     Use "if app.debug" anywhere in your code,
@@ -98,9 +90,28 @@ class DevelopmentConfig(Config):
         self.TESTING = False
 
 
-if os.getenv('TEST') == 'yes':
-    app_config = TestConfig()
-elif os.getenv('PRODUCTION') == 'yes':
+class TestingConfig(Config):
+    '''
+    A Config to use when we are running tests.
+    '''
+    def __init__(self):
+        super(TestingConfig, self).__init__()
+        self.ENVIRONMENT = 'Testing'
+        self.DEBUG = False
+        self.TESTING = True
+
+        self.MONGODB_SETTINGS = self.mongo_from_uri(
+            'mongodb://localhost:27017/testing'
+        )
+
+
+environment = os.getenv('ENVIRONMENT', 'DEVELELOPMENT').lower()
+# Alternatively this may be easier if you are managing multiple aws servers:
+# environment = socket.gethostname().lower()
+
+if environment == 'testing':
+    app_config = TestingConfig()
+elif environment == 'production':
     app_config = ProductionConfig()
 else:
     app_config = DevelopmentConfig()
