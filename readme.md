@@ -1,12 +1,14 @@
-Flask Heroku Boilerplate Project
+Flask WebApp Boilerplate Project
 =========================
 http://flask.pocoo.org/
 
-This project is a skeleton project meant to be helpful for those who want to quickly jump into a new flask project. UserAccounts, Tests, Caching, Mail, User Registration, Roles, Python Script Commands, and Twitter Bootstrap are already configured.
+This is a skeleton project meant to be helpful for those who want to quickly jump into a new flask project. UserAccounts, Tests, Caching, Mail, User Registration, Roles, Python Script Commands, and Twitter Bootstrap are already configured.
 
 The Flask Boilerplate Project consists of many projects merged into one to provide the most flexible boilerplate for your flask project.
 
 It is pre-configured for a production Heroku environment, but can be adjusted to suit your needs.
+
+If you would like other confirgurations available or to add certain features, create an issue and I will do my best.
 
 
 Installation
