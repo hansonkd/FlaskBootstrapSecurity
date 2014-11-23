@@ -1,6 +1,6 @@
-from flask_application import app
+from flask.ext.mongoengine import MongoEngine
 
-db = app.db
+db = MongoEngine()
 
 
 class FlaskDocument(db.Document):

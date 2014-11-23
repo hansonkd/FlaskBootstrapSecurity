@@ -1,10 +1,12 @@
 import os
+import imp
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from flask import Flask
 
 FLASK_APP_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 app = Flask(
     __name__,
@@ -65,11 +67,23 @@ if not os.path.exists(assets_output_dir):
 
 # Email
 from flask.ext.mail import Mail
-mail = Mail(app)
+app.mail = Mail(app)
 
 # Memcache
 from flask.ext.cache import Cache
 app.cache = Cache(app)
+
+# MongoEngine
+from flask_application.models import db
+app.db = db
+app.db.init_app(app)
+
+from flask.ext.security import Security, MongoEngineUserDatastore
+from flask_application.users.models import User, Role
+
+# Setup Flask-Security
+app.user_datastore = MongoEngineUserDatastore(app.db, User, Role)
+app.security = Security(app, app.user_datastore)
 
 # Business Logic
 # http://flask.pocoo.org/docs/patterns/packages/
@@ -80,16 +94,19 @@ app.register_blueprint(public)
 from flask_application.users.controllers import users
 app.register_blueprint(users)
 
-# MongoEngine
-from flask.ext.mongoengine import MongoEngine
-app.db = MongoEngine(app)
-
-from flask.ext.security import Security, MongoEngineUserDatastore
-from flask_application.users.models import User, Role
-
-# Setup Flask-Security
-user_datastore = MongoEngineUserDatastore(app.db, User, Role)
-app.security = Security(app, user_datastore)
-
 from flask_application.admin.controllers import admin
 app.register_blueprint(admin)
+
+
+def scan_and_import(name):
+    for root, _, files in os.walk(FLASK_APP_DIR):
+        if ('%s.py' % name) in files:
+            fp, pathname, description = imp.find_module(name, [root])
+            try:
+                imp.load_module(name, fp, pathname, description)
+            finally:
+                if fp:
+                    fp.close()
+
+# Filters need to be explicity imported in order to be registered.
+scan_and_import('filters')

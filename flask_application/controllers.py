@@ -1,10 +1,8 @@
 # http://flask.pocoo.org/docs/patterns/packages/
 
 from flask.views import MethodView, MethodViewType
-from flask import render_template
+from flask import current_app, render_template
 from flask._compat import with_metaclass
-
-from flask_application import app
 
 
 class ViewMeta(MethodViewType):
@@ -13,7 +11,8 @@ class ViewMeta(MethodViewType):
 
         route = dct.get('route')
         blueprint = dct.get('blueprint')
-        bp = blueprint if blueprint and blueprint != NotImplemented else app
+        has_blueprint = blueprint and blueprint != NotImplemented
+        bp = blueprint if has_blueprint else current_app
         if route and route != NotImplemented:
             endpoint = dct.get('route_name', name.lower().split('view')[0])
             bp.add_url_rule(route, view_func=cls().as_view(endpoint))

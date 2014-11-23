@@ -7,6 +7,7 @@ Flask-Mail==0.9.1
 Flask-Principal==0.4.0
 Flask-Script==2.0.5
 Flask-Security==1.7.3
+Flask-Testing==0.4.2
 Flask-WTF==0.9.5
 Jinja2==2.7.3
 MarkupSafe==0.23

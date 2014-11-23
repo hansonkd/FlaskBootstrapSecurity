@@ -1,20 +1,26 @@
+from flask import current_app
+
+from flask.ext.testing import TestCase
+
 from flask_application import app
 from flask_application.script import ResetDB, PopulateDB
-import unittest
 
 
-class FlaskTest(unittest.TestCase):
+class FlaskTest(TestCase):
+
+    def create_app(self):
+        return app
 
     def setUp(self):
         self.assertTrue(
-            app.config['TESTING'],
+            current_app.config['TESTING'],
             'Testing is not set. Are you sure you are using the right config?'
         )
-        app.config['WTF_CSRF_ENABLED'] = False
-        ResetDB().run()
-        PopulateDB().run()
-        self.app = app
-        self.client = app.test_client()
+        current_app.config['WTF_CSRF_ENABLED'] = False
+        ResetDB.drop_collections()
+        PopulateDB.create_roles()
+        PopulateDB.create_users()
+        self.client = self.app.test_client()
 
     def tearDown(self):
-        ResetDB().run()
+        ResetDB.drop_collections()

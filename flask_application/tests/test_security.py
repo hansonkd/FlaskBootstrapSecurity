@@ -2,7 +2,6 @@ import re
 
 from flask import url_for
 
-from flask_application import mail
 from flask_application.tests import FlaskTest
 
 
@@ -26,6 +25,7 @@ class TestSecurity(FlaskTest):
         self.assertTrue(('Hello %s' % email) in rv.data)
 
     def test_login(self):
+        print self.app
         rv = self.login('jimbob@example.com', 'password')
         self.assertTrue('Specified user does not exist' in rv.data)
 
@@ -44,7 +44,7 @@ class TestSecurity(FlaskTest):
         rv = self.login('jimbob@example.com', 'password')
         self.assertTrue('Specified user does not exist' in rv.data)
 
-        with mail.record_messages() as outbox:
+        with self.app.mail.record_messages() as outbox:
             self.assertEqual(len(outbox), 0)
 
             self.client.post(url_for('security.register'), data=dict(
