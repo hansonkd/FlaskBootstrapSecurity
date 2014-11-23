@@ -3,6 +3,7 @@ from flask_application import app
 from flask.ext.script import Manager, Server
 
 from flask_application.script import ResetDB, PopulateDB
+from flask_application.tests.script import RunTests
 
 from flask.ext.security.script import CreateUserCommand, AddRoleCommand,\
     RemoveRoleCommand, ActivateUserCommand, DeactivateUserCommand
@@ -18,6 +19,9 @@ manager.add_command('add_role', AddRoleCommand())
 manager.add_command('remove_role', RemoveRoleCommand())
 manager.add_command('deactivate_user', DeactivateUserCommand())
 manager.add_command('activate_user', ActivateUserCommand())
+
+manager.add_command('run_tests', RunTests())
+
 
 if __name__ == "__main__":
     manager.run()

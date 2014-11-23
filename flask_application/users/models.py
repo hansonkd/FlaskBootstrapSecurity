@@ -1,16 +1,14 @@
-from flask_application import app
-
 from flask.ext.security import UserMixin, RoleMixin
 
-db = app.db
+from flask_application.models import db, FlaskDocument
 
 
-class Role(db.Document, RoleMixin):
+class Role(FlaskDocument, RoleMixin):
     name = db.StringField(max_length=80, unique=True)
     description = db.StringField(max_length=255)
 
 
-class User(db.Document, UserMixin):
+class User(FlaskDocument, UserMixin):
     email = db.StringField(max_length=255)
     username = db.StringField(max_length=255)
     password = db.StringField(max_length=255)

@@ -1,4 +1,5 @@
 from flask_application import user_datastore
+from flask.ext.security.confirmable import confirm_user
 
 
 def create_roles():
@@ -12,8 +13,15 @@ def create_users():
               ('joe', 'joe@lp.com', 'password', ['editor'], True),
               ('jill', 'jill@lp.com', 'password', ['author'], True),
               ('tiya', 'tiya@lp.com', 'password', [], False)):
-        user_datastore.create_user(username=u[0], email=u[1], password=u[2],
-                                   roles=u[3], active=u[4])
+        user = user_datastore.create_user(
+            username=u[0],
+            email=u[1],
+            password=u[2],
+            roles=u[3],
+            active=u[4]
+        )
+        confirm_user(user)
+
         user_datastore.commit()
 
 
