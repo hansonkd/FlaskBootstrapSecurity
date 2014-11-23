@@ -101,6 +101,8 @@ The same carries over to your models. It is preferable to subclass `FlaskDocumen
 ##Running Tests
 You can run the unittests either with `ENVIRONMENT=TESTING ./manage.py run_tests` or with `ENVIRONMENT=TESTING . /bin/run_tests.sh`.
 
+This repo is configured for Continuous Integration with Travis. Every commit runs the test suite. If you can add Travis to your own projects by pointing it at your forked repository.
+
 ##Static Content
 This project is designed to use CSSMin and Flask-Assets to manage Assets to save on bandwidth and requests. 
 
