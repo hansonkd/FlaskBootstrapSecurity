@@ -5,3 +5,5 @@ script: "source ./bin/run_tests.sh"
 env:
   - ENVIRONMENT=TESTING
 install: "pip install -r requirements.txt --use-mirrors"
+services:
+  - mongodb
