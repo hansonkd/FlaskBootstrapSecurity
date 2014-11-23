@@ -82,6 +82,9 @@ _Run these commands by using `python manage.py <command>`_
 * `reset_db` - Drops all Mongo documents
 * `populate_db` - Script to fill the database with new data (either for testing or for initial). You can edit the `populate_data` command in `flask_application/populate.py` (Right now it is set up to add Users.)
 * `runserver` - Runs a debug server
+* `clean` - Removes *.pyc files
+* `shell` - Opens a shell within the Flask context
+* `show_urls` - Lists the urls that are available
 * `run_tests` - Runs unittests using nose.
 * Commands included with Flask-Security can be found here: http://packages.python.org/Flask-Security/#flask-script-commands and by looking in `flask_application/script.py`
 
@@ -93,6 +96,9 @@ The structure provides you with a way to scale your app comfortably. All sub-app
 
 The same carries over to your models. It is preferable to subclass `FlaskDocument` than to subclass mongoengines `Document` directly. Because `FlaskDocument` is under your control, you can override and add functions to enrich your all your models at once.
 
+##Running Tests
+You can run the unittests either with `ENVIRONMENT=TESTING ./manage.py run_tests` or with `ENVIRONMENT=TESTING . /bin/run_tests.sh`.
+
 ##Static Content
 This project is designed to use CSSMin and Flask-Assets to manage Assets to save on bandwidth and requests. 
 
@@ -103,7 +109,7 @@ Deploying
 
 This app is all ready configured to be deployed on Heroku with MongoHQ (database) and Mandrill (email).
 
-Simply add the free tiers of those services, change your `config.py` `SERVER_NAME`, set the production config with `heroku config:set PRODUCTION=yes` and deploy normally.
+Simply add the free tiers of those services, change your `config.py` `SERVER_NAME`, set the production config with `heroku config:set ENVIRONMENT=PRODUCTION` and deploy normally.
 
 Credit
 ------
