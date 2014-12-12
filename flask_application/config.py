@@ -13,14 +13,15 @@ class Config(object):
         self.SECRET_KEY = '{SECRET_KEY}'
         self.SITE_NAME = 'Flask Site'
         self.LOG_LEVEL = logging.DEBUG
-        self.SERVER_NAME = 'localhost:5000'
+        
+        # Look at Flask's documentation on SERVER_NAME to correctly configure,
+        # or you might end up with 404s.
+        self.SERVER_NAME = 'flaskbootstrapsecurity-hansonkd.c9.io'
 
         self.SYS_ADMINS = ['foo@example.com']
 
-        # Mongodb support
-        self.MONGODB_SETTINGS = self.mongo_from_uri(
-            'mongodb://localhost:27017/development'
-        )
+        # SQLAlchemy support
+        self.SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
 
         # Configured for Gmail
         self.DEFAULT_MAIL_SENDER = 'Admin < username@example.com >'
@@ -47,18 +48,6 @@ class Config(object):
         # CACHE
         self.CACHE_TYPE = 'simple'
 
-    @staticmethod
-    def mongo_from_uri(uri):
-        config = parse_uri(uri)
-        conn_settings = {
-            'db': config['database'],
-            'username': config['username'],
-            'password': config['password'],
-            'host': config['nodelist'][0][0],
-            'port': config['nodelist'][0][1]
-        }
-        return conn_settings
-
 
 class ProductionConfig(Config):
     def __init__(self):
@@ -75,7 +64,7 @@ class ProductionConfig(Config):
         self.MAIL_USERNAME = os.getenv('MANDRILL_USERNAME')
         self.MAIL_PASSWORD = os.getenv('MANDRILL_APIKEY')
 
-        self.MONGODB_SETTINGS = self.mongo_from_uri(os.getenv('MONGOHQ_URL'))
+        self.SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 
 class DevelopmentConfig(Config):
@@ -100,9 +89,7 @@ class TestingConfig(Config):
         self.DEBUG = False
         self.TESTING = True
 
-        self.MONGODB_SETTINGS = self.mongo_from_uri(
-            'mongodb://localhost:27017/testing'
-        )
+        self.SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
 
 
 environment = os.getenv('ENVIRONMENT', 'DEVELELOPMENT').lower()

@@ -3,18 +3,17 @@ from flask import current_app
 from flask.ext.script import Command
 from flask.ext.security.confirmable import confirm_user
 
-from flask_application.models import FlaskDocument
+from flask_application import app
 
 
 class ResetDB(Command):
     """Drops all tables and recreates them"""
     def run(self, **kwargs):
-        self.drop_collections()
+        self.drop_tables()
 
     @staticmethod
-    def drop_collections():
-        for klass in FlaskDocument.all_subclasses():
-            klass.drop_collection()
+    def drop_tables():
+        current_app.db.drop_all()
 
 
 class PopulateDB(Command):
@@ -31,16 +30,15 @@ class PopulateDB(Command):
 
     @staticmethod
     def create_users():
-        for u in (('matt', 'matt@lp.com', 'password', ['admin'], True),
-                  ('joe', 'joe@lp.com', 'password', ['editor'], True),
-                  ('jill', 'jill@lp.com', 'password', ['author'], True),
-                  ('tiya', 'tiya@lp.com', 'password', [], False)):
+        for u in (('matt@lp.com', 'password', ['admin'], True),
+                  ('joe@lp.com', 'password', ['editor'], True),
+                  ('jill@lp.com', 'password', ['author'], True),
+                  ('tiya@lp.com', 'password', [], False)):
             user = current_app.user_datastore.create_user(
-                username=u[0],
-                email=u[1],
-                password=u[2],
-                roles=u[3],
-                active=u[4]
+                email=u[0],
+                password=u[1],
+                roles=u[2],
+                active=u[3]
             )
             confirm_user(user)
 

@@ -73,16 +73,20 @@ app.mail = Mail(app)
 from flask.ext.cache import Cache
 app.cache = Cache(app)
 
-# MongoEngine
+# SQLAlchemy
 from flask_application.models import db
 app.db = db
 app.db.init_app(app)
 
-from flask.ext.security import Security, MongoEngineUserDatastore
+# Migrations
+from flask.ext.migrate import Migrate
+app.migrate = Migrate(app, app.db)
+
+from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask_application.users.models import User, Role
 
 # Setup Flask-Security
-app.user_datastore = MongoEngineUserDatastore(app.db, User, Role)
+app.user_datastore = SQLAlchemyUserDatastore(app.db, User, Role)
 app.security = Security(app, app.user_datastore)
 
 # Business Logic
@@ -96,7 +100,6 @@ app.register_blueprint(users)
 
 from flask_application.admin.controllers import admin
 app.register_blueprint(admin)
-
 
 def scan_and_import(name):
     for root, _, files in os.walk(FLASK_APP_DIR):

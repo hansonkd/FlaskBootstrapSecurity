@@ -33,42 +33,51 @@ Installation
     
 5. Edit `flask_application/config.py` to change your mail server, password salt and other settings:
 
-        class Config(object):
-            SECRET_KEY = '{SECRET_KEY}'
-            SITE_NAME = 'Flask Site'
-            SITE_ROOT_URL = 'http://example.com'
-            LOG_LEVEL = logging.DEBUG
-
-            MEMCACHED_SERVERS = ['localhost:11211']
-            SYS_ADMINS = ['foo@example.com']
-
-            # Mongodb support
-            MONGODB_DB = 'testing'
-            MONGODB_HOST = 'localhost'
-            MONGODB_PORT = 27017
-
+        
+    class Config(object):
+        def __init__(self):
+            self.DEBUG = False
+            self.TESTING = False
+            self.HEROKU = False
+            self.PRODUCTION = False
+    
+            self.SECRET_KEY = '{SECRET_KEY}'
+            self.SITE_NAME = 'Flask Site'
+            self.LOG_LEVEL = logging.DEBUG
+            
+            # Look at Flask's documentation on SERVER_NAME to correctly configure,
+            # or you might end up with 404s.
+            self.SERVER_NAME = 'localhost:8080'
+    
+            self.SYS_ADMINS = ['foo@example.com']
+    
+            # SQLAlchemy support
+            self.SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
+    
             # Configured for Gmail
-            DEFAULT_MAIL_SENDER = 'Admin < username@example.com >'
-            MAIL_SERVER = 'smtp.gmail.com'
-            MAIL_PORT = 465
-            MAIL_USE_SSL = True
-            MAIL_USERNAME = 'username@gmail.com'
-            MAIL_PASSWORD = '*********'
-
+            self.DEFAULT_MAIL_SENDER = 'Admin < username@example.com >'
+            self.MAIL_SERVER = 'smtp.gmail.com'
+            self.MAIL_PORT = 465
+            self.MAIL_USE_SSL = True
+            self.MAIL_USERNAME = 'user@example.com'
+            self.MAIL_PASSWORD = '****************'
+    
             # Flask-Security setup
-            SECURITY_EMAIL_SENDER = 'Security < security@example.com >'
-            SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
-            SECURITY_REGISTERABLE = True
-            SECURITY_RECOVERABLE = True
-            SECURITY_URL_PREFIX = '/auth'
-            SECUIRTY_POST_LOGIN = '/'
-            SECURITY_PASSWORD_HASH = 'pbkdf2_sha512'
+            self.SECURITY_EMAIL_SENDER = 'Security < security@example.com >'
+            self.SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
+            self.SECURITY_REGISTERABLE = True
+            self.SECURITY_RECOVERABLE = True
+            self.SECURITY_URL_PREFIX = '/auth'
+            self.SECUIRTY_POST_LOGIN = '/'
+            self.SECURITY_PASSWORD_HASH = 'pbkdf2_sha512'
             # import uuid; salt = uuid.uuid4().hex
-            SECURITY_PASSWORD_SALT = '2b8b74efc58e489e879810905b6b6d4dc6'
-
+            self.SECURITY_PASSWORD_SALT = '2b8b74efc58e489e879810905b6b6d4dc6'
+    
+            self.SECURITY_CONFIRMABLE = True
+            self.SECURITY_LOGIN_WITHOUT_CONFIRMATION = False
+    
             # CACHE
-            CACHE_TYPE = 'simple'
-
+            self.CACHE_TYPE = 'simple'
 
 7. Run a development server:
         
@@ -81,7 +90,7 @@ Usage
 _Run these commands by using `python manage.py <command>`_
 
 
-* `reset_db` - Drops all Mongo documents
+* `reset_db` - Drops all SQL tables
 * `populate_db` - Script to fill the database with new data (either for testing or for initial). You can edit the `populate_data` command in `flask_application/script.py` (Right now it is set up to add Users.)
 * `runserver` - Runs a debug server
 * `clean` - Removes *.pyc files
@@ -89,7 +98,7 @@ _Run these commands by using `python manage.py <command>`_
 * `show_urls` - Lists the urls that are available
 * `run_tests` - Runs unittests using nose.
 * Commands included with Flask-Security can be found here: http://packages.python.org/Flask-Security/#flask-script-commands and by looking in `flask_application/script.py`
-
+* Commands included with Flask-Migrate 
 ##Templates
 The base template used Flask-Bootstrap for basic templates. This project can be overridden by adding your own templates to the `templates` folder or by taking it out.
 
@@ -111,7 +120,7 @@ You can find this in the `style` block of the layout template. You can also simp
 Deploying
 ---------
 
-This app is all ready configured to be deployed on Heroku with MongoHQ (database) and Mandrill (email).
+This app is all ready configured to be deployed on Heroku with heroku-postgresql (database) and Mandrill (email).
 
 Simply add the free tiers of those services, change your `config.py` `SERVER_NAME`, set the production config with `heroku config:set ENVIRONMENT=PRODUCTION` and deploy normally.
 

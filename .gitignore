@@ -4,3 +4,6 @@
 .idea
 static/.webassets-cache
 static/gen/
+*.db
+.c9
+migrations
